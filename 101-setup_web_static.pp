@@ -23,7 +23,26 @@ $nginx_conf = "server {
       internal;
     }
 }"
+#!/usr/bin/python3
+"""Starts a Flask web application.
 
+The application listens on 0.0.0.0, port 5000.
+Routes:
+    /: Displays 'Hello HBNB!'
+"""
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route("/", strict_slashes=False)
+def hello_hbnb():
+    """Displays 'Hello HBNB!'"""
+    return "Hello HBNB!"
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
 package { 'nginx':
   ensure   => 'present',
   provider => 'apt'
@@ -87,5 +106,4 @@ file { '/etc/nginx/sites-available/default':
 } ->
 
 exec { 'nginx restart':
-  path => '/etc/init.d/'
-}
+  path => '/etc/init.d/
